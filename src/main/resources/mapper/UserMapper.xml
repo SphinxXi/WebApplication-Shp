@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--首先解析namespace: 命名空间，辞书形通常用来映射Dao（Mapper）层接口-->
+<mapper namespace="com.app.mapper.UserMapper">
+    <!--自定义返回结果集-->
+    <!--  property对应Bean文件属性，column对应数据库列名  -->
+    <resultMap id="UserMap" type="com.app.entity.UserInfo">
+        <id property="userId" column="userId" javaType="java.lang.Integer"></id>
+        <result property="userName" column="userName" javaType="java.lang.String"></result>
+        <result property="userPwd" column="userPwd" javaType="java.lang.String"></result>
+        <result property="userAge" column="userAge" javaType="java.lang.Integer"></result>
+    </resultMap>
+
+    <!--在各种标签中的id属性必须和接口中的方法名相同，id属性值必须唯一的，不能重复使用。
+        parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型-->
+
+    <!--useGeneratedKeys：（仅对insert有用）
+        这会告诉MyBatis使用JDBC的getGeneratedKeys方法来取出数据
+       （比如：像MySQL和SQLServer这样的数据库管理系统的自动递增字段）内部生成的主键。默认值：false。-->
+
+    <!--keyProperty：（仅对 insert有用）
+        标记一个属性，MyBatis会通过getGeneratedKeys或者通过insert语句的selectKey子元素设置它的值。默认：不设置。 -->
+
+    <!--#{}中的内容，为占位符，当参数为某个JavaBean时，表示放置该Bean对象的属性值-->
+
+    <insert id="insertData" useGeneratedKeys="true" keyProperty="userId">
+        insert into UserInfo (userName, userPwd, userAge)
+        values (#{userName}, #{userPwd},#{userAge})
+    </insert>
+
+    <update id="updateData" parameterType="com.app.entity.UserInfo">
+        update UserInfo set userName = #{userName}, userpPwd = #{userPwd},
+                            userAge = #{userAge} where userId = #{userId}
+    </update>
+
+    <delete id="deleteData" parameterType="int">
+        delete from UserInfo where userId = #{userId}
+    </delete>
+
+    <delete id="deleteByName" parameterType="String">
+        delete from UserInfo where userName = #{userName}
+    </delete>
+
+    <select id="selectByID" parameterType="int" resultMap="UserMap">
+        select * from UserInfo where userId = #{userId}
+    </select>
+
+    <select id="selectByName" parameterType="String" resultMap="UserMap">
+        select * from UserInfo where userName = #{userName}
+    </select>
+
+    <select id="selectAll" resultMap="UserMap">
+        select * from UserInfo
+    </select>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--首先解析namespace: 命名空间，辞书形通常用来映射Dao（Mapper）层接口-->
+<mapper namespace="com.app.mapper.ProductMapper">
+    <!--自定义返回结果集-->
+    <resultMap id="ProductMap" type="com.app.entity.ProductInfo">
+        <id property="productId" column="productId" javaType="java.lang.Integer"></id>
+        <result property="productName" column="productName" javaType="java.lang.String"></result>
+        <result property="productNum" column="productNum" javaType="java.lang.Integer"></result>
+        <result property="productPrice" column="productPrice" javaType="java.lang.Double"></result>
+    </resultMap>
+
+    <!--在各种标签中的id属性必须和接口中的方法名相同，id属性值必须唯一的，不能重复使用。
+        parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型-->
+
+    <!--useGeneratedKeys：（仅对insert有用）
+        这会告诉MyBatis使用JDBC的getGeneratedKeys方法来取出数据
+       （比如：像MySQL和SQLServer这样的数据库管理系统的自动递增字段）内部生成的主键。默认值：false。-->
+
+    <!--keyProperty：（仅对 insert有用）
+        标记一个属性，MyBatis会通过getGeneratedKeys或者通过insert语句的selectKey子元素设置它的值。默认：不设置。 -->
+
+    <!--#{}中的内容，为占位符，当参数为某个JavaBean时，表示放置该Bean对象的属性值-->
+
+    <insert id="insertPData" useGeneratedKeys="true" keyProperty="productId">
+        insert into ProductInfo (productName, productNum, productPrice)
+        values (#{productName},#{productNum},#{productPrice})
+    </insert>
+
+    <update id="updatePData" parameterType="com.app.entity.ProductInfo">
+        update ProductInfo set productName = #{productName}, productNum = #{productNum},
+                               productPrice = #{productPrice} where productId = #{productId}
+    </update>
+
+    <delete id="deletePData" parameterType="int">
+        delete from ProductInfo where productId = #{productId}
+    </delete>
+
+    <delete id="deleteByPName" parameterType="String">
+        delete from ProductInfo where productName = #{productName}
+    </delete>
+
+    <select id="selectByPID" parameterType="int" resultMap="ProductMap">
+        select * from ProductInfo where productId = #{productId}
+    </select>
+
+    <select id="selectByPName" parameterType="String" resultMap="ProductMap">
+        select * from ProductInfo where productName = #{productName}
+    </select>
+
+    <select id="selectAllP" resultMap="ProductMap">
+        select * from ProductInfo
+    </select>
+</mapper>

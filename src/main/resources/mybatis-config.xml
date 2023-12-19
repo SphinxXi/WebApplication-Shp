@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!--引入外部配置文件  - 供整个配置文件使用，子标签property-->
+    <properties resource="sqlserver.properties"></properties>
+
+    <settings>
+        <!-- 延迟加载的开关 -->
+        <setting name="lazyLoadingEnabled" value="false" />
+        <!-- 设置积极加载（true）或按需加载（false） -->
+        <setting name="aggressiveLazyLoading" value="true" />
+
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <!--设置SQL语句打印输出-->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+    <!--  类型别名  -->
+<!--    <typeAliases>-->
+<!--        <typeAlias type="com.app.entity.User" alias="User"></typeAlias>-->
+<!--    </typeAliases>-->
+
+    <!--配置mybatis运行环境  - 对事物的管理和连接池配置，基本不变-->
+    <environments default="mybatis">
+        <environment id="mybatis">
+            <!--type="JDBC"代表使用JDBC的提交和回滚来管理事务-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--mybatis提供了3种数据元类型，分别是：POOLEN、UPOOLED、JNDI-->
+            <!--POOLED表示JDBC数据源连接池-->
+            <!--UNPOOLED表示不支持数据源连接池-->
+            <!--JDNI表示外部数据源连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 告知映射文件方式1，自动扫描包内的Mapper接口与配置文件
+            <package name="com/app/mapper"/>-->
+        <!-- 告知映射文件方式2，一个个配置 -->
+        <mapper resource="mapper/UserMapper.xml"></mapper>
+        <mapper resource="mapper/ProductMapper.xml"></mapper>
+    </mappers>
+
+</configuration>
