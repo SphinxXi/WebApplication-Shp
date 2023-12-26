@@ -7,7 +7,8 @@
 2023.12.20：19.50更新访问链接： http://68ff1531.r6.cpolar.top
 2023.12.21：11.48更新访问链接： http://9cfffdc.r1.vip.cpolar.cn
 2023.12.23：15.58更新访问链接： http://4ea531b8.r7.cpolar.top
-2023.12.25：11.19更新访问链接：  http://2259d47.r16.cpolar.top
+2023.12.25：11.19更新访问链接： http://2259d47.r16.cpolar.top
+2023.12.26：10.17更新访问链接： https://713edb44.r11.cpolar.top/
 
 测试账号1：admin  测试密码1：admin
 测试账号2：zhangsan  测试密码2:123
